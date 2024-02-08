@@ -10,7 +10,28 @@ trait Main {
     /**
      * @throws Exception
      */
-    public function parse($options=[]): void
+    public function compile($options=[]): void
+    {
+        $object = $this->object();
+        $posix_id = $object->config(Config::POSIX_ID);
+        if(
+            !in_array(
+                $posix_id,
+                [
+                    0,
+                    33
+                ]
+            )
+        ){
+            throw new Exception('Access denied...');
+        }
+        ddd($options);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function ast($options=[]): void
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
