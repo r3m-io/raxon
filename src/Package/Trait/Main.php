@@ -3,6 +3,7 @@ namespace Package\R3m\Io\Raxon\Trait;
 
 use R3m\Io\Config;
 
+use R3m\Io\Module\Core;
 use R3m\Io\Module\File;
 
 use Exception;
@@ -56,7 +57,7 @@ trait Main {
             $data = [];
         }
         elseif(File::exist($options->data)){
-            $data = File::read($options->data);
+            $data = Core::object(File::read($options->data), Core::OBJECT_OBJECT);
             ddd($data);
         }
 
