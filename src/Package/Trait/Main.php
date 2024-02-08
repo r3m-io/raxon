@@ -3,6 +3,8 @@ namespace Package\R3m\Io\Raxon\Trait;
 
 use R3m\Io\Config;
 
+use R3m\Io\Module\File;
+
 use Exception;
 
 trait Main {
@@ -31,10 +33,11 @@ trait Main {
     /**
      * @throws Exception
      */
-    public function ast($options=[]): void
+    public function ast($options): void
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
+
         if(
             !in_array(
                 $posix_id,
@@ -46,6 +49,18 @@ trait Main {
         ){
             throw new Exception('Access denied...');
         }
+        if(property_exists($options, 'document') === false){
+            throw new Exception('Document not found...');
+        }
+        if(property_exists($options, 'data') === false){
+            $data = [];
+        }
+        elseif(File::exist($options->data)){
+            $data = File::read($options->data);
+            ddd($data);
+        }
+
+        $read = File::read($options->document);
         ddd($options);
     }
 }
