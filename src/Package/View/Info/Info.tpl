@@ -8,4 +8,8 @@ Module: {{$request.module|uppercase.first}}
 Submodule: {{$request.submodule|uppercase.first}}
 
 {{/if}}
-parse
+compile
+ast
+info
+setup
+update
