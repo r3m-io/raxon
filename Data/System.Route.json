@@ -1,0 +1,18 @@
+{
+  "System": {
+    "Route": [
+      {
+        "#class": "System.Route",
+        "name": "r3m-io-cli-raxon",
+        "path": "r3m_io\/raxon",
+        "controller": "Package.R3m.Io.Raxon.Controller.Cli.run",
+        "request": {
+          "language": "en"
+        },
+        "method": [
+          "CLI"
+        ]
+      }
+    ]
+  }
+}
