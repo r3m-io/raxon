@@ -122,17 +122,22 @@ trait Main {
             $events = inotify_read($fd);
             if($events !== false){
                 foreach($events as $event){
-                    switch($event['mask']){
+                    switch($event['mask']) {
                         case 8 :
                             $event['mask_type'] = 'IN_CLOSE_WRITE';
                             //exec task
-                            $url = $options['dir'] . $event['name'];
-
-                            $exec = Core::binary($object) .
-                                ' r3m_io/raxon task process -url=' .
-                                escapeshellarg($url)
-                            ;
-                            ddd($exec);
+                            $extension = File::extension($event['name']);
+                            if($extension === 'json'){
+                                $url = $options['dir'] . $event['name'];
+                                $basename = File::basename($event, $extension);
+                                $exec = Core::binary($object) .
+                                    ' r3m_io/raxon task process -input=' .
+                                    escapeshellarg($url) .
+                                    ' -output=' .
+                                    escapeshellarg($options['dir'] . $basename . '.response')
+                                ;
+                                ddd($exec);
+                            }
                             break;
                         case 16 :
                             $event['mask_type'] = 'IN_CLOSE_NOWRITE';
@@ -144,10 +149,7 @@ trait Main {
                             $event['mask_type'] = 'IN_CREATE';
                             break;
                     }
-
-                    d($event);
                 }
-
             }
             usleep(2000); // 2ms
             $time = microtime(true);
