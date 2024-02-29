@@ -84,6 +84,7 @@ trait Main {
         ){
             throw new Exception('Access denied...');
         }
+        $options = Core::object($options, Core::OBJECT_ARRAY);
         if(!array_key_exists('dir', $options)){
             throw new Exception('Directory not found...');
         }
