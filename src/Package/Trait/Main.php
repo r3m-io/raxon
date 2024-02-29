@@ -111,14 +111,14 @@ trait Main {
         Dir::create($options['dir'], Dir::CHMOD);
 
         File::write($url, implode(PHP_EOL, $write));
-        $command = 'chmod +x ' . $url;
-        exec($command);
         File::permission($object, [
             'dir' => $dir,
             'file' => $url,
             'options_dir'  => $options['dir']
         ]);
         Dir::change($dir);
+        $command = 'chmod +x ' . basename($url);
+        exec($command);
 //        exec('./' . basename($url) . ' > /dev/null 2>&1 &');
         exec('./' . basename($url), $output);
         d($output);
