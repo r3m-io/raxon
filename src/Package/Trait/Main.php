@@ -99,7 +99,13 @@ trait Main {
         echo $options['dir'] . PHP_EOL;
         $write = [];
         $write[] = '#!/bin/bash';
-        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to | while read -r directory action file; do if [[ "$file" =~ .*json$ ]]; then echo "xml file" fi done';
+        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to | ';
+        $write[] = 'while read -r directory action file; do';
+        $write[] = 'if [[ "$file" =~ .*json$ ]]; then # Does the file end with .xml?';
+        $write[] = 'echo "xml file" # If so, do your thing here!';
+        $write[] = 'fi';
+        $write[] = 'done';
+        $write[] = '';
 
         Dir::create($dir, Dir::CHMOD);
         Dir::create($options['dir'], Dir::CHMOD);
