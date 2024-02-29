@@ -97,12 +97,12 @@ trait Main {
         $url = $dir .
             Core::uuid() .
             $object->config('extension.sh');
+        echo $options['dir'];
         $write = [];
         $write[] = '#!/bin/bash';
         $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to |';
         $write[] = 'while read -r directory action file; do';
         $write[] = '    echo "json file" # Do your thing here!';
-        $write[] = '    echo action=$action file=$file';
         $write[] = 'done';
         Dir::create($dir, Dir::CHMOD);
         Dir::create($options['dir'], Dir::CHMOD);
