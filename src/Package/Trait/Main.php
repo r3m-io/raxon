@@ -97,17 +97,27 @@ trait Main {
             $object->config('extension.sh');
         Core::interactive();
         echo $options['dir'] . PHP_EOL;
+
+
+
         $write = [];
         $write[] = '#!/bin/bash';
         $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to |';
         $write[] = 'while read -r directory action file; do';
         $write[] = '    echo "json file" # Do your thing here!';
         $write[] = 'done';
+
         Dir::create($dir, Dir::CHMOD);
         Dir::create($options['dir'], Dir::CHMOD);
+
         File::write($url, implode(PHP_EOL, $write));
         $command = 'chmod +x ' . $url;
         exec($command);
+        File::permission($object, [
+            'dir' => $dir,
+            'file' => $url,
+            'options_dir'  => $options['dir']
+        ]);
         Dir::change($dir);
 //        exec('./' . basename($url) . ' > /dev/null 2>&1 &');
         exec('./' . basename($url), $output);
