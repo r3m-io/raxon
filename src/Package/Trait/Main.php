@@ -97,6 +97,7 @@ trait Main {
         $url = $dir .
             Core::uuid() .
             $object->config('extension.sh');
+        Core::interactive();
         echo $options['dir'] . PHP_EOL;
         $write = [];
         $write[] = '#!/bin/bash';
