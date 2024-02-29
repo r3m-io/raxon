@@ -5,6 +5,7 @@ use R3m\Io\Config;
 
 use R3m\Io\Module\Core;
 use R3m\Io\Module\File;
+use R3m\Io\Module\Dir;
 
 use Exception;
 
@@ -86,13 +87,29 @@ trait Main {
         if(!array_key_exists('dir', $options)){
             throw new Exception('Directory not found...');
         }
-        $url = $object->config('ramdisk.url') .
+        $dir = $object->config('ramdisk.url') .
             $posix_id .
             $object->config('ds') .
             'Inotify' .
-            $object->config('ds') .
+            $object->config('ds')
+        ;
+        $url = $dir .
             Core::uuid() .
             $object->config('extension.sh');
+        $write = [];
+        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to --include \'.*\.json$\' |';
+        $write[] = 'while read -r directory action file; do';
+        $write[] = '    echo "json file" # Do your thing here!';
+        $write[] = '    echo action=$action file=$file';
+        $write[] = 'done';
+        Dir::create($dir, Dir::CHMOD);
+        File::write($url, implode(PHP_EOL, $write));
+        $command = 'chmod +x ' . $url;
+        exec($command);
+        Dir::change($dir);
+//        exec('./' . basename($url) . ' > /dev/null 2>&1 &');
+        exec('./' . basename($url), $output);
+        d($output);
         d($url);
         ddd($options);
     }
