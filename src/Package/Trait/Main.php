@@ -105,6 +105,7 @@ trait Main {
         $write[] = '    echo action=$action file=$file';
         $write[] = 'done';
         Dir::create($dir, Dir::CHMOD);
+        Dir::create($options['dir'], Dir::CHMOD);
         File::write($url, implode(PHP_EOL, $write));
         $command = 'chmod +x ' . $url;
         exec($command);
