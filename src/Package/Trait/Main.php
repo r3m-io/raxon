@@ -88,44 +88,39 @@ trait Main {
         if(!array_key_exists('dir', $options)){
             throw new Exception('Directory not found...');
         }
-        $dir = $object->config('project.dir.data') .
-            'Inotify' .
-            $object->config('ds')
-        ;
-        $url = $dir .
-            Core::uuid() .
-            $object->config('extension.sh');
+//        $dir = $object->config('project.dir.data') .
+//            'Inotify' .
+//            $object->config('ds')
+//        ;
+//        $url = $dir .
+//            Core::uuid() .
+//            $object->config('extension.sh');
         Core::interactive();
         echo $options['dir'] . PHP_EOL;
-        $write = [];
-        $write[] = '#!/bin/bash';
-        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to | \\';
-        $write[] = 'while read -r directory action file; do \\';
-        $write[] = 'if [[ "$file" =~ .*json$ ]]; then # Does the file end with .xml? \\';
-        $write[] = 'echo "xml file" # If so, do your thing here! \\';
-        $write[] = 'fi \\';
-        $write[] = 'done \\';
-        $write[] = '';
-
-        Dir::create($dir, Dir::CHMOD);
         Dir::create($options['dir'], Dir::CHMOD);
-
-        File::write($url, implode(PHP_EOL, $write));
         File::permission($object, [
-            'dir' => $dir,
-            'file' => $url,
+//            'dir' => $dir,
+//            'file' => $url,
             'options_dir'  => $options['dir']
         ]);
-        Dir::change($dir);
-        $command = 'chmod +x ' . basename($url);
-        exec($command);
-//        exec('./' . basename($url) . ' > /dev/null 2>&1 &');
-        exec('./' . basename($url), $output);
-        d($output);
-        d($url);
-        ddd($options);
+
+        $fd = inotify_init();
+        $read = array($fd);
+        $write = null;
+        $except = null;
+        stream_select($read,$write,$except,0);
+        stream_set_blocking($fd, 0);
+        $watch_descriptor = inotify_add_watch($fd, $options['dir'], IN_CREATE | IN_MOVED_TO);
+        while(true){
+            $events = inotify_read($fd);
+            d($events);
+            usleep(2000); // 2ms
+            $time = microtime(true);
+            if($time > $object->config('time.start') + 60){
+                break;
+            }
+        }
+        inotify_rm_watch($fd, $watch_descriptor);
+        fclose($fd);
     }
-
-
-
 }
