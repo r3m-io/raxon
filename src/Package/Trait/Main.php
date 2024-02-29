@@ -97,7 +97,7 @@ trait Main {
         $url = $dir .
             Core::uuid() .
             $object->config('extension.sh');
-        echo $options['dir'];
+        echo $options['dir'] . PHP_EOL;
         $write = [];
         $write[] = '#!/bin/bash';
         $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to |';
