@@ -135,7 +135,6 @@ trait Main {
                         case 256 :
                             $event['mask_word'] = 'IN_CREATE';
                             break;
-                        case 8 :
                     }
                     d($event);
                 }
