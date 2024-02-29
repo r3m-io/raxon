@@ -88,7 +88,7 @@ trait Main {
         if(!array_key_exists('dir', $options)){
             throw new Exception('Directory not found...');
         }
-        $dir = $object->config('ramdisk.url') .
+        $dir = '/tmp/' .
             $posix_id .
             $object->config('ds') .
             'Inotify' .
