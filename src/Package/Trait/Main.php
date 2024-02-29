@@ -106,6 +106,7 @@ trait Main {
         $write[] = 'while read -r directory action file; do';
         $write[] = '    echo "json file" # Do your thing here!';
         $write[] = 'done';
+        $write[] = '';
 
         Dir::create($dir, Dir::CHMOD);
         Dir::create($options['dir'], Dir::CHMOD);
