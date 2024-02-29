@@ -125,6 +125,14 @@ trait Main {
                     switch($event['mask']){
                         case 8 :
                             $event['mask_type'] = 'IN_CLOSE_WRITE';
+                            //exec task
+                            $url = $options['dir'] . $event['name'];
+
+                            $exec = Core::binary($object) .
+                                ' r3m_io/raxon task process -url=' .
+                                escapeshellarg($url)
+                            ;
+                            ddd($exec);
                             break;
                         case 16 :
                             $event['mask_type'] = 'IN_CLOSE_NOWRITE';
@@ -136,6 +144,7 @@ trait Main {
                             $event['mask_type'] = 'IN_CREATE';
                             break;
                     }
+
                     d($event);
                 }
 
