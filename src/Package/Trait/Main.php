@@ -96,6 +96,9 @@ trait Main {
 //            Core::uuid() .
 //            $object->config('extension.sh');
         Core::interactive();
+        if(substr($options['dir'], 0, -1) !== '/'){
+            $options['dir'] .= '/';
+        }
         echo $options['dir'] . PHP_EOL;
         Dir::create($options['dir'], Dir::CHMOD);
         File::permission($object, [
