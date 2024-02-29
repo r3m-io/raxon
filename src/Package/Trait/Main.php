@@ -65,6 +65,9 @@ trait Main {
         ddd($options);
     }
 
+    /**
+     * @throws Exception
+     */
     public function inotify($options): void
     {
         $object = $this->object();
@@ -80,6 +83,17 @@ trait Main {
         ){
             throw new Exception('Access denied...');
         }
+        if(!array_key_exists('dir', $options)){
+            throw new Exception('Directory not found...');
+        }
+        $url = $object->config('ramdisk.url') .
+            $posix_id .
+            $object->config('ds') .
+            'Inotify' .
+            $object->config('ds') .
+            Core::uuid() .
+            $object->config('extension.sh');
+        d($url);
         ddd($options);
     }
 
