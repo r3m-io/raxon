@@ -129,7 +129,7 @@ trait Main {
                             $extension = File::extension($event['name']);
                             if($extension === 'json'){
                                 $url = $options['dir'] . $event['name'];
-                                $basename = File::basename($event, $extension);
+                                $basename = File::basename($event['name'], $extension);
                                 $exec = Core::binary($object) .
                                     ' r3m_io/raxon task process -input=' .
                                     escapeshellarg($url) .
