@@ -99,7 +99,7 @@ trait Main {
             $object->config('extension.sh');
         $write = [];
         $write[] = '#!/bin/bash';
-        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to --include \'.*\.json$\' |';
+        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to --include \'.*\.json\' |';
         $write[] = 'while read -r directory action file; do';
         $write[] = '    echo "json file" # Do your thing here!';
         $write[] = '    echo action=$action file=$file';
