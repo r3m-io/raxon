@@ -97,12 +97,9 @@ trait Main {
             $object->config('extension.sh');
         Core::interactive();
         echo $options['dir'] . PHP_EOL;
-
-
-
         $write = [];
         $write[] = '#!/bin/bash';
-        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to |';
+        $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to | ';
         $write[] = 'while read -r directory action file; do';
         $write[] = 'if [[ "$file" =~ .*json$ ]]; then # Does the file end with .xml?';
         $write[] = 'echo "xml file" # If so, do your thing here!';
