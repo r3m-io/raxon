@@ -88,9 +88,7 @@ trait Main {
         if(!array_key_exists('dir', $options)){
             throw new Exception('Directory not found...');
         }
-        $dir = '/tmp/' .
-            $posix_id .
-            $object->config('ds') .
+        $dir = $object->config('project.dir.data') .
             'Inotify' .
             $object->config('ds')
         ;
