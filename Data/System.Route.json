@@ -13,30 +13,6 @@
           "CLI"
         ],
         "priority": 2001
-      },
-      {
-        "#class": "System.Route",
-        "name": "sse-response",
-        "path": "\/Sse\/Response\/",
-        "host": "api.workandtravel.world",
-        "controller": "Package:R3m.Io:RaXon:Controller:Sse.response",
-        "priority": 3001,
-        "method": [
-          "GET",
-          "POST"
-        ]
-      },
-      {
-        "#class": "System.Route",
-        "name": "sse-request",
-        "path": "\/Sse\/Request\/",
-        "host": "api.workandtravel.world",
-        "controller": "Package:R3m.Io:RaXon:Controller:Sse.request",
-        "priority": 3002,
-        "method": [
-          "GET",
-          "POST"
-        ]
       }
     ]
   }
