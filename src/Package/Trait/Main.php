@@ -104,7 +104,9 @@ trait Main {
         $write[] = '#!/bin/bash';
         $write[] = 'inotifywait -m ' . $options['dir']  .' -e create -e moved_to |';
         $write[] = 'while read -r directory action file; do';
-        $write[] = '    echo "json file" # Do your thing here!';
+        $write[] = 'if [[ "$file" =~ .*json$ ]]; then # Does the file end with .xml?';
+        $write[] = 'echo "xml file" # If so, do your thing here!';
+        $write[] = 'fi';
         $write[] = 'done';
         $write[] = '';
 
