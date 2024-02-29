@@ -121,7 +121,25 @@ trait Main {
         while(true){
             $events = inotify_read($fd);
             if($events !== false){
-                d($events);
+                foreach($events as $event){
+                    switch($event['mask']){
+                        case 8 :
+                            $event['mask_word'] = 'IN_CLOSE_WRITE';
+                            break;
+                        case 16 :
+                            $event['mask_word'] = 'IN_CLOSE_NOWRITE';
+                            break;
+                        case 128 :
+                            $event['mask_word'] = 'IN_MOVED_TO';
+                            break;
+                        case 256 :
+                            $event['mask_word'] = 'IN_CREATE';
+                            break;
+                        case 8 :
+                    }
+                    d($event);
+                }
+
             }
             usleep(2000); // 2ms
             $time = microtime(true);
