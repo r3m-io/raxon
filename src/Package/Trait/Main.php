@@ -113,7 +113,9 @@ trait Main {
         $watch_descriptor = inotify_add_watch($fd, $options['dir'], IN_CREATE | IN_MOVED_TO);
         while(true){
             $events = inotify_read($fd);
-            d($events);
+            if($events !== false){
+                d($events);
+            }
             usleep(2000); // 2ms
             $time = microtime(true);
             if($time > $object->config('time.start') + 60){
