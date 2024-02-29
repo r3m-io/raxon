@@ -110,7 +110,14 @@ trait Main {
         $except = null;
         stream_select($read,$write,$except,0);
         stream_set_blocking($fd, 0);
-        $watch_descriptor = inotify_add_watch($fd, $options['dir'], IN_CREATE | IN_MOVED_TO);
+        $watch_descriptor = inotify_add_watch(
+            $fd,
+            $options['dir'],
+            IN_CREATE |
+                IN_MOVED_TO |
+                IN_CLOSE_WRITE |
+                IN_CLOSE_NOWRITE
+            );
         while(true){
             $events = inotify_read($fd);
             if($events !== false){
