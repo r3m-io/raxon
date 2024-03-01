@@ -96,7 +96,7 @@ trait Main {
 //            Core::uuid() .
 //            $object->config('extension.sh');
         Core::interactive();
-        if(substr($options['dir'], 0, -1) !== '/'){
+        if(substr($options['dir'], -1, 1) !== '/'){
             $options['dir'] .= '/';
         }
         echo $options['dir'] . PHP_EOL;
@@ -137,9 +137,9 @@ trait Main {
                                     ' r3m_io/raxon task process -input=' .
                                     escapeshellarg($url) .
                                     ' -output=' .
-                                    escapeshellarg($options['dir'] . $basename . '.response')
+                                    escapeshellarg($options['dir'] . $event['name'])
                                 ;
-                                ddd($exec);
+                                d($exec);
                             }
                             break;
                         case 16 :
